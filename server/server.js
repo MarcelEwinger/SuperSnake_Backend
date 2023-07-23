@@ -120,12 +120,14 @@ function newGame(client, playerName){
   clientRooms.push(newRoom)//add newRoomObject into clientRooms Array
 
   client.emit('ROOM_NAME', roomName);//send client the roomName
-  console.log('Clientroom :'  + clientRooms.find(element => element.name === roomName))
+  const room = clientRooms.find(element => element.name === roomName)
+  console.log('Clientroom :'  + room.name)
+  console.log('ClientroomPlayers :'  + room.playersCount)
   
   state[roomName] = initGame();//The game state for the generated roomName is initialized
   state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
   client.join(roomName);//client joins room
-  console.log('Client joins room:')
+  console.log('Client joins room')
   client.number = 1;//client is player1
   client.playerName = playerName;
   console.log('Client Player number:' + client.number)
