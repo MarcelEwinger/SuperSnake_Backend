@@ -159,7 +159,7 @@ function searchForEmptyRoom(client, playerName, io){
 
 
 function joinGame(playerName, client, io, roomName){
-  console.log(io.sockets.adapter.rooms.get("RoomName: " + roomName));
+  console.log(io.sockets.adapter.rooms.get(roomName));
   const numClients = io.sockets.adapter.rooms.get(roomName)
   console.log("Method: joinGame // numClients: " + numClients)
 
@@ -176,6 +176,8 @@ function joinGame(playerName, client, io, roomName){
     //clientRooms[client.id] = roomName;
 
     client.join(roomName);//The roomName is assigned to the clientRooms object.
+    client.emit('ROOM_NAME', roomName);
+    console.log("Player 2 joins room")
     client.number = 2;//client is player2
     client.playerName = playerName;
     state[roomName].players[1].playerOneName = playerName//set the playerName for PlayerOne
