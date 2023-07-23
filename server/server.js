@@ -148,7 +148,7 @@ function searchForEmptyRoom(client, playerName, io){
     const foundRoom = clientRooms.find(room => room.playersCount === 1);
       if(foundRoom){
         console.log("searchForEmptyRoom PlayersCount === 1: " + foundRoom)
-        joinGame(playerName, client, io, room.name)
+        joinGame(playerName, client, io, foundRoom.name)
         
       }else{
         newGame(client, playerName)
