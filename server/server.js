@@ -142,19 +142,18 @@ function newGame(client, playerName){
 function searchForEmptyRoom(client, playerName, io){
   if(clientRooms.length === 0){//array is empty
     newGame(client, playerName)
-    return;
+    console.log("searchForEmptyRoom NewGame")
+    
   }else{//min one Room is in array
-
-    for(const room of clientRooms){
-      if(room.playersCount === 1){
+    const foundRoom = clientRooms.find(room => room.playersCount === 1);
+      if(foundRoom){
+        console.log("searchForEmptyRoom PlayersCount === 1: " + foundRoom)
         joinGame(playerName, client, io, room.name)
-        return;
+        
       }else{
         newGame(client, playerName)
-        return;
+        console.log("searchForEmptyRoom PlayersCount === 0:")
       }
-    }
-
   }
 }
 
