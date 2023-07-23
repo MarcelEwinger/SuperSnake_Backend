@@ -114,6 +114,7 @@ function newGame(client, playerName){
   clientRooms[client.id].players = 1;
   client.emit('ROOM_NAME', roomName);//send client the roomName
   console.log('Clientroom :'  + clientRooms[client.id])
+  console.log('ClientroomPlayers :'  + clientRooms[client.id].players)
   state[roomName] = initGame();//The game state for the generated roomName is initialized
   state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
   client.join(roomName);//client joins room
