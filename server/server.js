@@ -111,6 +111,7 @@ function newGame(client, playerName){
   let roomName = makeid();//generate roomID
   console.log('New Room:'  + roomName)
   clientRooms[client.id] = roomName;//The roomName is assigned to the clientRooms object.
+  clientRooms[client.id].players = 1;
   client.emit('ROOM_NAME', roomName);//send client the roomName
   console.log('Clientroom :'  + clientRooms[client.id])
   state[roomName] = initGame();//The game state for the generated roomName is initialized
