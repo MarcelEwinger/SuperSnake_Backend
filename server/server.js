@@ -46,11 +46,12 @@ io.on('connection', client => {
     newGame(client, playerName);
   });
   
-
+  /*
   client.on('JOIN_GAME', (playerName)=>{
     console.log('Join Game' + playerName)
     joinGame(playerName, client, io);
   });
+  */
 
   client.on('MOVEMENT', (keyCode) =>{
     handleMovement(keyCode, client)
@@ -111,7 +112,7 @@ function newGame(client, playerName){
   console.log('New Room:'  + roomName)
   clientRooms[client.id] = roomName;//The roomName is assigned to the clientRooms object.
   client.emit('ROOM_NAME', roomName);//send client the roomName
-  console.log('Emit Room :'  + clientRooms)
+  console.log('Clientroom :'  + clientRooms[client.id])
   state[roomName] = initGame();//The game state for the generated roomName is initialized
   state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
   client.join(roomName);//client joins room
