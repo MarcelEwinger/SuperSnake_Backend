@@ -120,7 +120,7 @@ function newGame(client, playerName){
   clientRooms.push(newRoom)//add newRoomObject into clientRooms Array
 
   client.emit('ROOM_NAME', roomName);//send client the roomName
-  console.log('Clientroom :'  + clientRooms.find(name => room.name === roomName))
+  console.log('Clientroom :'  + clientRooms.find(element => element.name === roomName))
   
   state[roomName] = initGame();//The game state for the generated roomName is initialized
   state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
