@@ -141,11 +141,12 @@ function newGame(client, playerName){
 
 function searchForEmptyRoom(client, playerName, io){
   const room = clientRooms.find(element => element.name === roomName)
-  if(room.playersCount === 1){//one Space is free
-    joinGame(playerName, client, io, room.name)
-  }else{//no Space is free
+  if(!room){
     newGame(client, playerName)
+  }else{
+    joinGame(playerName, client, io, room.name)
   }
+
 }
 
 
