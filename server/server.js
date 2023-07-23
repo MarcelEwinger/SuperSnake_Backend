@@ -28,7 +28,7 @@ server.listen(PORT, ()=>{
 
 
 const state = {};
-const clientRooms = {};
+const clientRooms = [];
 
 /*
 Whenever a client connects to the server, the provided callback function will be executed,
@@ -110,11 +110,18 @@ function handleMovement(keyCode, client){
 function newGame(client, playerName){
   let roomName = makeid();//generate roomID
   console.log('New Room:'  + roomName)
-  clientRooms[client.id] = roomName;//The roomName is assigned to the clientRooms object.
-  clientRooms[client.id].players = 1;
+  //clientRooms[client.id] = roomName;//The roomName is assigned to the clientRooms object.
+
+  const newRoom ={//create newRoom Object
+    name: roomName,
+    playersCount: 1
+  }
+
+  clientRooms.push(newRoom)//add newRoomObject into clientRooms Array
+
   client.emit('ROOM_NAME', roomName);//send client the roomName
-  console.log('Clientroom :'  + clientRooms[client.id])
-  console.log('ClientroomPlayers :'  + clientRooms[client.id].players)
+  console.log('Clientroom :'  + clientRooms.find(name => room.name === roomName))
+  
   state[roomName] = initGame();//The game state for the generated roomName is initialized
   state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
   client.join(roomName);//client joins room
