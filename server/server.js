@@ -43,7 +43,7 @@ io.on('connection', client => {
 
   
   client.on('NEW_GAME', (playerName) =>{
-    newGame(client, playerName);
+    searchForEmptyRoom(client, playerName, io)
   });
   
   /*
@@ -110,7 +110,6 @@ function handleMovement(keyCode, client){
 function newGame(client, playerName){
   let roomName = makeid();//generate roomID
   console.log('New Room:'  + roomName)
-  //clientRooms[client.id] = roomName;//The roomName is assigned to the clientRooms object.
 
   const newRoom ={//create newRoom Object
     name: roomName,
@@ -120,33 +119,40 @@ function newGame(client, playerName){
   clientRooms.push(newRoom)//add newRoomObject into clientRooms Array
 
   client.emit('ROOM_NAME', roomName);//send client the roomName
-  const room = clientRooms.find(element => element.name === roomName)
+
+  const room = clientRooms.find(element => element.name === roomName)//find Room with specific roomName
   console.log('Clientroom :'  + room.name)
   console.log('ClientroomPlayers :'  + room.playersCount)
   
   state[roomName] = initGame();//The game state for the generated roomName is initialized
   state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
   client.join(roomName);//client joins room
+
   console.log('Client joins room')
+
   client.number = 1;//client is player1
   client.playerName = playerName;
+
   console.log('Client Player number:' + client.number)
   console.log('Client Player Name:' + client.playerName)
   client.emit('INIT', 1);
 }
 
 
-function searchForEmptyRoom(){
-
+function searchForEmptyRoom(client, playerName, io){
+  const room = clientRooms.find(element => element.name === roomName)
+  if(room.playersCount === 1){//one Space is free
+    joinGame(playerName, client, io, room.name)
+  }else{//no Space is free
+    newGame(client, playerName)
+  }
 }
 
 
-
-
-/** */
-function joinGame(playerName, client, io){
-  console.log(io.sockets.adapter.rooms.get(roomName));
+function joinGame(playerName, client, io, roomName){
+  console.log(io.sockets.adapter.rooms.get("RoomName: " + roomName));
   const numClients = io.sockets.adapter.rooms.get(roomName)
+  console.log("Method: joinGame // numClients: " + numClients)
 
 
     if (numClients === 0) {//if the code was not right
@@ -158,10 +164,12 @@ function joinGame(playerName, client, io){
       return;
     }
 
-    clientRooms[client.id] = roomName;
+    //clientRooms[client.id] = roomName;
 
     client.join(roomName);//The roomName is assigned to the clientRooms object.
     client.number = 2;//client is player2
+    client.playerName = playerName;
+    state[roomName].players[1].playerOneName = playerName//set the playerName for PlayerOne
     client.emit('INIT', 2);
     
     startGame(roomName);//startGame
