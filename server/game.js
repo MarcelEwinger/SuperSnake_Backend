@@ -29,6 +29,7 @@ function createGameState() {
         {x: 3, y: 10},
       ],
       points: 0,
+      playerOneName: "",
 
     }, {//player 2
       pos: {
@@ -44,7 +45,8 @@ function createGameState() {
         {x: 19, y: 10},
         {x: 18, y: 10},
       ],
-      points: 0
+      points: 0,
+      playerTwoName: ""
     }],
     food: {},
     gridsize: GRID_SIZE,
@@ -147,6 +149,25 @@ function randomFood(state) {
 }
 
 function getUpdatedVelocity(keyCode) {
+  switch (keyCode) {
+    case 37: { // left
+      return { x: -1, y: 0 };
+    }
+    case 38: { // down
+      return { x: 0, y: -1 };
+    }
+    case 39: { // right
+      return { x: 1, y: 0 };
+    }
+    case 40: { // up
+      return { x: 0, y: 1 };
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////
+
+function getUpdatedVelocityAndroid(keyCode) {
   switch (keyCode) {
     case 37: { // left
       return { x: -1, y: 0 };

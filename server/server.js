@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express')// Define an Express app instance and import the Express framework
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
@@ -11,11 +11,16 @@ const { FRAME_RATE, MAX_PLAYERS_PER_ROOM } = require('./constants');
 const { makeid } = require('./utils');
 
 
+// Define a route for the HTTP endpoint '/'
+// Use an anonymous function as the request handler
 app.get('/', (_req, res) =>{
+  // Write an HTML heading into the response with the value of 'PORT' as a variable
   res.write(`<h1>Socket IO Start on Port : ${PORT}</h1>`)
+  // End the HTTP response to send it to the client
   res.end();
 })
 
+// When the server starts listening, the following callback function will be executed
 server.listen(PORT, ()=>{
   console.log('Listing on*:3000')
 })
@@ -25,26 +30,31 @@ server.listen(PORT, ()=>{
 const state = {};
 const clientRooms = {};
 
+/*
+Whenever a client connects to the server, the provided callback function will be executed,
+and the 'client' object representing the newly connected client will be passed as an argument.
+*/
 io.on('connection', client => {
   console.log('Client connected: ' + client.id)
-
+  
   client.on("disconnect", () => {
     console.log('Client disconnected ' + client.id); // undefined
   });
 
-  client.on('NEW_GAME', () =>{
-    newGame(client);
+  
+  client.on('NEW_GAME', (playerName) =>{
+    newGame(client, playerName);
   });
+  
 
-  client.on('JOIN_GAME', (roomName)=>{
-    console.log('Join Game roomName ' + roomName)
-    joinGame(roomName, client, io);
+  client.on('JOIN_GAME', (playerName)=>{
+    console.log('Join Game' + playerName)
+    joinGame(playerName, client, io);
   });
 
   client.on('MOVEMENT', (keyCode) =>{
     handleMovement(keyCode, client)
   });
-
 
 });
 
@@ -96,41 +106,36 @@ function handleMovement(keyCode, client){
 
 }
 
-function newGame(client){
+function newGame(client, playerName){
   let roomName = makeid();//generate roomID
   console.log('New Room:'  + roomName)
   clientRooms[client.id] = roomName;//The roomName is assigned to the clientRooms object.
   client.emit('ROOM_NAME', roomName);//send client the roomName
-  console.log('Emit Room :'  + roomName)
+  console.log('Emit Room :'  + clientRooms)
   state[roomName] = initGame();//The game state for the generated roomName is initialized
-
+  state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
   client.join(roomName);//client joins room
   console.log('Client joins room:')
   client.number = 1;//client is player1
+  client.playerName = playerName;
   console.log('Client Player number:' + client.number)
+  console.log('Client Player Name:' + client.playerName)
   client.emit('INIT', 1);
+}
+
+
+function searchForEmptyRoom(){
+
 }
 
 
 
 
-
-function joinGame(roomName, client, io){
-  //const room = io.sockets.adapter.rooms[roomName];//get roomName
+/** */
+function joinGame(playerName, client, io){
   console.log(io.sockets.adapter.rooms.get(roomName));
   const numClients = io.sockets.adapter.rooms.get(roomName)
 
-  /*
-  let allUsers;//decleare new let
-    if (room) {//if room is true
-      allUsers = room.sockets; //get the sockets in the room 
-    }
-
-    let numClients = 0;
-    if (allUsers) {
-      numClients = Object.keys(allUsers).length;//length of object
-    }
-    */
 
     if (numClients === 0) {//if the code was not right
       client.emit('UNKNOWN_CODE');
