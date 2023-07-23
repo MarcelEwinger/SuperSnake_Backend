@@ -142,6 +142,7 @@ function newGame(client, playerName){
 function searchForEmptyRoom(client, playerName, io){
   if(clientRooms.length === 0){//array is empty
     newGame(client, playerName)
+    return;
   }else{//min one Room is in array
 
     for(const room of clientRooms){
@@ -152,19 +153,6 @@ function searchForEmptyRoom(client, playerName, io){
         newGame(client, playerName)
         return;
       }
-    }
-
-  }
-
-  for(const room of clientRooms){
-    if(room.playersCount === 1){
-      joinGame(playerName, client, io, room.name)
-      return;
-      newGame(client, playerName)
-      
-    }else{
-      
-      
     }
 
   }
