@@ -46,12 +46,6 @@ io.on('connection', client => {
     searchForEmptyRoom(client, playerName, io)
   });
   
-  /*
-  client.on('JOIN_GAME', (playerName)=>{
-    console.log('Join Game' + playerName)
-    joinGame(playerName, client, io);
-  });
-  */
 
   client.on('MOVEMENT', (keyCode) =>{
     handleMovement(keyCode, client)
@@ -86,7 +80,8 @@ function emitGameOver(room, winner) {
 
 
 function handleMovement(keyCode, client){
-  const roomName = clientRooms[client.id];
+  //const roomName = clientRooms[client.id];
+  const roomName = clientRooms.find(element => element.name === client.room)
     if (!roomName) {
       return;
     }
@@ -107,6 +102,9 @@ function handleMovement(keyCode, client){
 
 }
 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function newGame(client, playerName){
   let roomName = makeid();//generate roomID
   console.log('New Room:'  + roomName)
@@ -133,11 +131,13 @@ function newGame(client, playerName){
 
   client.number = 1;//client is player1
   client.playerName = playerName;
+  client.room = roomName
 
   console.log('Client Player number:' + client.number)
   console.log('Client Player Name:' + client.playerName)
   client.emit('INIT', 1);
 }
+
 
 
 function searchForEmptyRoom(client, playerName, io){
@@ -182,6 +182,7 @@ function joinGame(playerName, client, io, roomName){
     
     client.number = 2;//client is player2
     client.playerName = playerName;
+    client.room = roomName
     console.log('Client Player number:' + client.number)
     console.log('Client Player Name:' + client.playerName)
 
