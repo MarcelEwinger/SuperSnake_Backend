@@ -120,6 +120,7 @@ function newGame(client, playerName){
 
   client.emit('ROOM_NAME', roomName);//send client the roomName
 
+
   const room = clientRooms.find(element => element.name === roomName)//find Room with specific roomName
   console.log('Clientroom :'  + room.name)
   console.log('ClientroomPlayers :'  + room.playersCount)
@@ -173,7 +174,7 @@ function joinGame(playerName, client, io, roomName){
       return;
     }
 
-    //clientRooms[client.id] = roomName;
+    
 
     client.join(roomName);//The roomName is assigned to the clientRooms object.
     client.emit('ROOM_NAME', roomName);
@@ -181,6 +182,10 @@ function joinGame(playerName, client, io, roomName){
     client.number = 2;//client is player2
     client.playerName = playerName;
     state[roomName].players[1].playerOneName = playerName//set the playerName for PlayerOne
+    console.log("JoinGame Method PlayerOneName: " + state[roomName].players[0].playerOneName)
+    console.log("JoinGame Method PlayerTwpeName: " + state[roomName].players[1].playerTwoName)
+    io.to(roomName).emit("PLAYER_ONE_NAME", state[roomName].players[0].playerOneName)
+    io.to(roomName).emit("PLAYER_TWO_NAME", state[roomName].players[1].playerTwoName)
     client.emit('INIT', 2);
     
     startGame(roomName);//startGame
