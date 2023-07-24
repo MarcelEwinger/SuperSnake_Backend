@@ -179,9 +179,13 @@ function joinGame(playerName, client, io, roomName){
     client.join(roomName);//The roomName is assigned to the clientRooms object.
     client.emit('ROOM_NAME', roomName);
     console.log("Player 2 joins room")
+    
     client.number = 2;//client is player2
     client.playerName = playerName;
-    state[roomName].players[1].playerOneName = playerName//set the playerName for PlayerOne
+    console.log('Client Player number:' + client.number)
+    console.log('Client Player Name:' + client.playerName)
+
+    state[roomName].players[1].playerTwoName = playerName//set the playerName for PlayerOne
     console.log("JoinGame Method PlayerOneName: " + state[roomName].players[0].playerOneName)
     console.log("JoinGame Method PlayerTwpeName: " + state[roomName].players[1].playerTwoName)
     io.to(roomName).emit("PLAYER_ONE_NAME", state[roomName].players[0].playerOneName)
