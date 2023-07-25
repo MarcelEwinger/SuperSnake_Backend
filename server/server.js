@@ -82,6 +82,7 @@ function emitGameOver(room, winner) {
 function handleMovement(keyCode, client){
   //const roomName = clientRooms[client.id];
   const roomName = clientRooms.find(element => element.name === client.room)
+  console.log("HandleMovement: " + roomName);
     if (!roomName) {
       return;
     }
