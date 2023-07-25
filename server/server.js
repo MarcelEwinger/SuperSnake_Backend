@@ -39,6 +39,12 @@ io.on('connection', client => {
   
   client.on("disconnect", () => {
     console.log('Client disconnected ' + client.id); // undefined
+    if(state[client.room]){
+      delete state[client.room]
+      const deleteRoom = clientRooms.filter((obj) => obj.name !== client.room)
+      console.log("Deleted Room: " + deleteRoom)
+    }
+
   });
 
   
