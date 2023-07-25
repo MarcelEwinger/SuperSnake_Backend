@@ -102,7 +102,7 @@ function handleMovement(keyCode, client){
 
     const vel = getUpdatedVelocity(keyCode); //get vel
     if (vel) {//true
-      console.log("HandleMovement: " + state[roomName]);
+      console.log("HandleMovement: " + roomName);
       state[roomName].players[client.number - 1].vel = vel;//update
     }
     
