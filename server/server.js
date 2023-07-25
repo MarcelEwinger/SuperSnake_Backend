@@ -82,6 +82,11 @@ function emitGameOver(room, winner) {
   // Send this event to everyone in the room.
   io.sockets.in(room)
     .emit('GAME_OVER', JSON.stringify({ winner }));
+    if(state[roomName]){
+      delete state[roomName]
+      const deleteRoom = clientRooms.filter((obj) => obj.name !== roomName)
+      console.log("Deleted Room: " + deleteRoom)
+    }
 }
 
 
