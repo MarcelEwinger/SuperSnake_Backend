@@ -82,11 +82,10 @@ function emitGameOver(room, winner) {
   // Send this event to everyone in the room.
   io.sockets.in(room)
     .emit('GAME_OVER', JSON.stringify({ winner }));
-    if(state[room]){
       delete state[room]
       const deleteRoom = clientRooms.filter((obj) => obj.name !== room)
       console.log("Deleted Room: " + deleteRoom)
-    }
+    
 }
 
 
@@ -175,6 +174,8 @@ function joinGame(playerName, client, io, roomName){
   console.log(io.sockets.adapter.rooms.get(roomName));
   const numClients = io.sockets.adapter.rooms.get(roomName)
   console.log("Method: joinGame // numClients: " + numClients)
+  const findClientRooms = clientRooms.findIndex(item => item.name === roomName)
+  clientRooms[findClientRooms].playersCount = 2
 
 
     if (numClients === 0) {//if the code was not right
