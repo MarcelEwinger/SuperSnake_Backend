@@ -135,6 +135,14 @@ function gameLoop(state) {
   }
 
   //check if player 2 collides with player 1
+  if (playerTwo.vel.x || playerTwo.vel.y) {//check if player 1 is moving 
+    for (let cell of playerOne.snake) {
+      if(cell.x === playerTwo.pos.x && cell.y === playerTwo.pos.y){
+        return 1;
+
+      }
+    }
+  }
   
 
 
