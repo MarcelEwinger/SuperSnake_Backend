@@ -57,17 +57,13 @@ io.on('connection', client => {
 });
 
 function deleteRoom(roomName){
-  if(clientRooms[roomName]){
-    console.log("DeleteRoom Room is in Array")
-    clientRooms = removeObjectWithId(state, roomName);
-    console.log("DeleteRoom Room: " + clientRooms[roomName])
-    
-    
-  }
+  
+  console.log("DeleteRoom Room is in Array")
+  clientRooms = removeObjectWithId(state, roomName);
+  console.log("DeleteRoom Room: " + clientRooms[roomName])
+  
   if(state[roomName]){
     delete state[roomName]
-    console.log("Deleted State: " + state[roomName].players[0].playerOneName)
-
   }
 
 }
