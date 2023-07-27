@@ -28,8 +28,8 @@ server.listen(PORT, ()=>{
 
 
 
-const state = {};
-const clientRooms = [];
+let state = {};
+let clientRooms = [];
 
 /*
 Whenever a client connects to the server, the provided callback function will be executed,
@@ -58,8 +58,7 @@ io.on('connection', client => {
 
 function deleteRoom(roomName){
   console.log("DeleteRoom Room is in Array")
-  const newClientRooms = clientRooms.filter((obj) => obj.name !== roomName)
-  clientRooms = newClientRooms
+  clientRooms = clientRooms.filter((obj) => obj.name !== roomName)
   console.log("DeleteRoom Room: " + clientRooms[roomName])
   
   if(state[roomName]){
