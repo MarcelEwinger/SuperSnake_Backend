@@ -78,7 +78,7 @@ function removeObjectWithId(arr, id) {
 
 
 
-function startGame(roomName){
+function startGame(roomName, client){
   const interval = setInterval(() =>{//intervall
     const winner = gameLoop(state[roomName]);//save winner
     if (!winner) {//no winner
