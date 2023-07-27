@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 const { initGame, gameLoop, getUpdatedVelocity } = require('./game');
 const { FRAME_RATE, MAX_PLAYERS_PER_ROOM } = require('./constants');
 const { makeid } = require('./utils');
+const { Console } = require('console');
 
 
 // Define a route for the HTTP endpoint '/'
@@ -39,11 +40,7 @@ io.on('connection', client => {
   
   client.on("disconnect", () => {
     console.log('Client disconnected ' + client.id); // undefined
-    if(state[client.room]){
-      delete state[client.room]
-      const deleteRoom = clientRooms.filter((obj) => obj.name !== client.room)
-      console.log("Deleted Room: " + deleteRoom)
-    }
+   
 
   });
 
@@ -59,6 +56,28 @@ io.on('connection', client => {
 
 });
 
+function deleteRoom(roomName){
+  if(clientRooms[roomName]){
+    console.log("DeleteRoom Room is in Array")
+    clientRooms = removeObjectWithId(state, roomName);
+    console.log("DeleteRoom Room: " + clientRooms[roomName])
+    
+    
+  }
+  if(state[roomName]){
+    delete state[roomName]
+    console.log("Deleted State: " + state[roomName].players[0].playerOneName)
+
+  }
+
+}
+
+function removeObjectWithId(arr, id) {
+  return arr.filter((obj) => obj.id !== id);
+}
+
+
+
 function startGame(roomName){
   const interval = setInterval(() =>{//intervall
     const winner = gameLoop(state[roomName]);//save winner
@@ -66,8 +85,10 @@ function startGame(roomName){
       emitGameState(roomName, state[roomName])
     } else {
       emitGameOver(roomName, winner);
-      state[roomName] = null;
       clearInterval(interval);
+      deleteRoom(client.room);
+
+      
     }
   }, 1000 / FRAME_RATE);
 }
@@ -80,11 +101,10 @@ function emitGameState(room, gameState) {
 
 function emitGameOver(room, winner) {
   // Send this event to everyone in the room.
-  io.sockets.in(room)
-    .emit('GAME_OVER', JSON.stringify({ winner }));
-      delete state[room]
-      const deleteRoom = clientRooms.filter((obj) => obj.name !== room)
-      console.log("Deleted Room: " + deleteRoom)
+  io.sockets.in(room).emit('GAME_OVER', JSON.stringify({ winner }));
+
+
+      
     
 }
 
@@ -206,5 +226,5 @@ function joinGame(playerName, client, io, roomName){
     io.to(roomName).emit("PLAYER_TWO_NAME", state[roomName].players[1].playerTwoName)
     client.emit('INIT', 2);
     
-    startGame(roomName);//startGame
+    startGame(roomName, client);//startGame
   }
