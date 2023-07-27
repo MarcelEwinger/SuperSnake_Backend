@@ -57,24 +57,15 @@ io.on('connection', client => {
 });
 
 function deleteRoom(roomName){
-  
-    console.log("DeleteRoom Room is in Array")
-    clientRooms = clientRooms.filter((obj) => obj.name !== roomName)
-    console.log("DeleteRoom Room: " + clientRooms[roomName])
+  console.log("DeleteRoom Room is in Array")
+  clientRooms = clientRooms.filter((obj) => obj.name !== roomName)
+  console.log("DeleteRoom Room: " + clientRooms[roomName])
   
   if(state[roomName]){
     console.log("DeleteRoom State: " + state[roomName])
     delete state[roomName]
   }
-
 }
-
-function removeObjectWithId(arr, id) {
-  
-  return arr.filter((obj) => obj.name !== id);
-}
-
-
 
 function startGame(roomName, client){
   const interval = setInterval(() =>{//intervall
