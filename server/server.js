@@ -57,12 +57,13 @@ io.on('connection', client => {
 });
 
 function deleteRoom(roomName){
-  if(clientRooms[roomName]){
+  
     console.log("DeleteRoom Room is in Array")
     clientRooms = removeObjectWithId(state, roomName);
     console.log("DeleteRoom Room: " + clientRooms[roomName])
-  }
+  
   if(state[roomName]){
+    console.log("DeleteRoom State: " + state[roomName])
     delete state[roomName]
   }
 
