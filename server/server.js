@@ -58,7 +58,8 @@ io.on('connection', client => {
 
 function deleteRoom(roomName){
   console.log("DeleteRoom Room is in Array")
-  clientRooms = clientRooms.filter((obj) => obj.name !== roomName)
+  const newClientRooms = clientRooms.filter((obj) => obj.name !== roomName)
+  clientRooms = newClientRooms
   console.log("DeleteRoom Room: " + clientRooms[roomName])
   
   if(state[roomName]){
