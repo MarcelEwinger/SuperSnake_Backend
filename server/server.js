@@ -40,6 +40,7 @@ io.on('connection', client => {
   
   client.on("disconnect", () => {
     console.log('Client disconnected ' + client.id); // undefined
+    deleteRoom(client.room)
    
 
   });
