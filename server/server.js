@@ -215,6 +215,6 @@ function joinGame(playerName, client, io, roomName){
     io.to(roomName).emit("PLAYER_ONE_NAME", state[roomName].players[0].playerOneName)
     io.to(roomName).emit("PLAYER_TWO_NAME", state[roomName].players[1].playerTwoName)
     client.emit('INIT', 2);
-    
+    io.to(roomName).emit("START_GAME")
     startGame(roomName, client);//startGame
   }
