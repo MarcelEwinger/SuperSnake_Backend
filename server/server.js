@@ -60,10 +60,10 @@ io.on('connection', client => {
 function deleteRoom(roomName){
   console.log("DeleteRoom Room is in Array")
   clientRooms = clientRooms.filter((obj) => obj.name !== roomName)
-  console.log("DeleteRoom Room: " + clientRooms[roomName])
+  //console.log("DeleteRoom Room: " + clientRooms[roomName])
   
   if(state[roomName]){
-    console.log("DeleteRoom State: " + state[roomName])
+    //console.log("DeleteRoom State: " + state[roomName])
     delete state[roomName]
   }
 }
@@ -87,6 +87,7 @@ function emitGameState(room, gameState) {
   // Send this event to everyone in the room.
   io.sockets.in(room)
     .emit('UPDATE_GAME_STATE', JSON.stringify(gameState));
+    console.log("UPDATE_GAME_STAT")
 }
 
 function emitGameOver(room, winner) {
