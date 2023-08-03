@@ -183,7 +183,7 @@ function getUpdatedVelocity(keyCode, velOld) {
 
       
     }
-    case 38: { // down
+    case 40: { // down
       if(velOld.y != 1){
         return { x: 0, y: -1 };
       }
@@ -195,7 +195,7 @@ function getUpdatedVelocity(keyCode, velOld) {
       }
       
     }
-    case 40: { // up
+    case 38: { // up
       if(velOld.y != -1){
         return { x: 0, y: 1 };
       }
