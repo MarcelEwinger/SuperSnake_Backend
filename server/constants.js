@@ -1,4 +1,4 @@
-const FRAME_RATE = 0.5;
+const FRAME_RATE = 2;
 const GRID_SIZE = 20;
 const MAX_PLAYERS_PER_ROOM = 2;
 
