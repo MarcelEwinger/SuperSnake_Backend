@@ -88,7 +88,7 @@ function emitGameState(room, gameState) {
   // Send this event to everyone in the room.
   io.sockets.in(room)
     .emit('UPDATE_GAME_STATE', JSON.stringify(gameState));
-    console.log("UPDATE_GAME_STAT")
+    //console.log("UPDATE_GAME_STAT")
 }
 
 function emitGameOver(room, winner) {
