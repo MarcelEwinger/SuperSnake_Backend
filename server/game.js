@@ -29,7 +29,7 @@ function createGameState() {
         {x: 3, y: 10},
       ],
       points: 0,
-      playerOneName: "",
+      playerName: "",
 
     }, {//player 2
       pos: {
@@ -46,7 +46,7 @@ function createGameState() {
         {x: 18, y: 10},
       ],
       points: 0,
-      playerTwoName: ""
+      playerName: ""
     }],
     food: {},
     gridsize: GRID_SIZE,

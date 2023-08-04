@@ -147,7 +147,7 @@ function newGame(client, playerName){
   console.log('ClientroomPlayers :'  + room.playersCount)
   
   state[roomName] = initGame();//The game state for the generated roomName is initialized
-  state[roomName].players[0].playerOneName = playerName//set the playerName for PlayerOne
+  state[roomName].players[0].playerName = playerName//set the playerName for PlayerOne
   client.join(roomName);//client joins room
 
   console.log('Client joins room')
@@ -211,11 +211,11 @@ function joinGame(playerName, client, io, roomName){
     console.log('Client Player number:' + client.number)
     console.log('Client Player Name:' + client.playerName)
 
-    state[roomName].players[1].playerTwoName = playerName//set the playerName for PlayerOne
-    console.log("JoinGame Method PlayerOneName: " + state[roomName].players[0].playerOneName)
-    console.log("JoinGame Method PlayerTwpeName: " + state[roomName].players[1].playerTwoName)
-    io.to(roomName).emit("PLAYER_ONE_NAME", state[roomName].players[0].playerOneName)
-    io.to(roomName).emit("PLAYER_TWO_NAME", state[roomName].players[1].playerTwoName)
+    state[roomName].players[1].playerName = playerName//set the playerName for PlayerOne
+    console.log("JoinGame Method PlayerOneName: " + state[roomName].players[0].playerName)
+    console.log("JoinGame Method PlayerTwoName: " + state[roomName].players[1].playerName)
+    io.to(roomName).emit("PLAYER_ONE_NAME", state[roomName].players[0].playerName)
+    io.to(roomName).emit("PLAYER_TWO_NAME", state[roomName].players[1].playerName)
     client.emit('INIT', 2);
     io.to(roomName).emit("START_GAME")
     startGame(roomName, client);//startGame
