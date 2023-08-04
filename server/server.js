@@ -77,9 +77,7 @@ function startGame(roomName, client){
     } else {
       emitGameOver(roomName, winner);
       clearInterval(interval);
-      deleteRoom(client.room);
-
-      
+      deleteRoom(client.room); 
     }
   }, 1000 / FRAME_RATE);
 }
@@ -88,16 +86,11 @@ function emitGameState(room, gameState) {
   // Send this event to everyone in the room.
   io.sockets.in(room)
     .emit('UPDATE_GAME_STATE', JSON.stringify(gameState));
-    //console.log("UPDATE_GAME_STAT")
 }
 
 function emitGameOver(room, winner) {
   // Send this event to everyone in the room.
   io.sockets.in(room).emit('GAME_OVER', JSON.stringify({ winner }));
-
-
-      
-    
 }
 
 
