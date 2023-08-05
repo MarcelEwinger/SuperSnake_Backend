@@ -144,11 +144,6 @@ function gameLoop(state) {
     }
   }
   
-
-
-
-
-
   return false;
 }
 
@@ -180,14 +175,12 @@ function getUpdatedVelocity(keyCode, velOld) {
       if(velOld.x != 1){
         return { x: -1, y: 0 };
       }
-
-      
     }
     case 40: { // down
       if(velOld.y != 1){
         return { x: 0, y: -1 };
       }
-      
+  
     }
     case 39: { // right
       if(velOld.x != -1){
