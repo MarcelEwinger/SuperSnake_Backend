@@ -16,34 +16,34 @@ function createGameState() {
   return {
     players: [{//player 1
       pos: {
-        x: 3,
-        y: 10,
+        x: 13,
+        y: 20,
       },
       vel: {
         x: 1,
         y: 0,
       },
       snake: [
-        {x: 1, y: 10},
-        {x: 2, y: 10},
-        {x: 3, y: 10},
+        {x: 11, y: 20},
+        {x: 12, y: 20},
+        {x: 13, y: 20},
       ],
       points: 0,
       playerOneName: "",
 
     }, {//player 2
       pos: {
-        x: 18,
-        y: 10,
+        x: 28,
+        y: 20,
       },
       vel: {
         x: -1,
         y: 0,
       },
       snake: [
-        {x: 20, y: 10},
-        {x: 19, y: 10},
-        {x: 18, y: 10},
+        {x: 30, y: 20},
+        {x: 29, y: 20},
+        {x: 28, y: 20},
       ],
       points: 0,
       playerTwoName: ""
